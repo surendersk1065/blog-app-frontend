@@ -7,7 +7,6 @@ import auth from '../config/firebase';
 function Blogs() {
 
     const [blogs, setBlogs] = useState([]);
-    const navigate = useNavigate()  
     const [admin,setAdmin] = useState(false)
 
 
