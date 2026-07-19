@@ -3,13 +3,33 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from "axios"
 import Footer from './common/Footer';
+import auth from '../config/firebase';
 function Blogs() {
 
     const [blogs, setBlogs] = useState([]);
+    const navigate = useNavigate()  
+    const [admin,setAdmin] = useState(false)
+
 
     useEffect(() => {
         window.scrollTo(0, 0);
-        axios.get("http://localhost:5000/api/blogs").then((res) => {
+
+        auth.onAuthStateChanged((user) => {
+            if(user){
+                if(user.uid === "QP72lA7RZROwR0trK5NrGTCm7fm1"){
+                    console.log("admin")
+                    setAdmin(true)
+                }
+                else{
+                    console.log("not admin")
+                    setAdmin(false)
+                }
+            }
+            else{
+                console.log("logged out")
+            }
+        })
+        axios.get("https://blog-app-wsqh.onrender.com/api/blogs").then((res) => {
             console.log(res.data)
             setBlogs(res.data)
         }).catch(() => {
@@ -25,10 +45,10 @@ function Blogs() {
 
     const handleLike = async (blog_id) => {
         try {
-            const response = await axios.patch(`http://localhost:5000/api/blogs/like/${blog_id}`);
+            const response = await axios.patch(`https://blog-app-wsqh.onrender.com/api/blogs/like/${blog_id}`);
             // After successfully updating the likes count in the backend, fetch the updated list of blogs
             if (response.status === 200) {
-                axios.get("http://localhost:5000/api/blogs").then((res) => {
+                axios.get("https://blog-app-wsqh.onrender.com/api/blogs").then((res) => {
                     console.log(res.data)
                     setBlogs(res.data)
                 }).catch(() => {
@@ -47,10 +67,10 @@ function Blogs() {
 
 
         const likes = 0
-        axios.post("http://localhost:5000/api/blogs", { newTitle, date, newContent, likes }).then((res) => {
+        axios.post("https://blog-app-wsqh.onrender.com/api/blogs", { newTitle, date, newContent, likes }).then((res) => {
             console.log(res.data)
 
-            axios.get("http://localhost:5000/api/blogs").then((res) => {
+            axios.get("https://blog-app-wsqh.onrender.com/api/blogs").then((res) => {
                 console.log(res.data)
                 setBlogs(res.data)
             }).catch(() => {
@@ -71,7 +91,8 @@ function Blogs() {
             <h2 className="text-center text-5xl font-bold mb-14">Latest  <span className='text-orange-400'>Blogs</span> 📚</h2>
 
             {/* Blog creation form */}
-            <div className="blog-creation-form mb-8" style={{ width: "80%", margin: "auto" }}>
+            {
+                admin ? <div className="blog-creation-form mb-8" style={{ width: "80%", margin: "auto" }}>
                 <form onSubmit={handleNewBlogSubmit} className="flex flex-col gap-4">
                     <input
                         type="text"
@@ -89,11 +110,13 @@ function Blogs() {
                         rows="4"
                         required
                     />
-                    <button type="submit" className="bg-orange-400 text-white p-2 rounded hover:bg-orange-600">
+                    <button type="submit" className="bg-orange-400 text-white p-2 rounded hover:bg-orange-600 mb-10 ">
                         Add Blog
                     </button>
                 </form>
-            </div>
+            </div> : ""
+            }
+            
 
             <div className="blogs-container grid grid-cols-1 md:grid-cols-2 gap-6 container mx-auto px-4">
                 {blogs.map((blog) => (

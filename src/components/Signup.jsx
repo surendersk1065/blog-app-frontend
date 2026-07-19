@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import auth from '../config/firebase';
 
 function Signup() {
     const [email, setEmail] = useState('');
@@ -16,6 +18,9 @@ function Signup() {
             setError('Passwords do not match');
             return;
         }
+
+        createUserWithEmailAndPassword(auth,email,password).then((res) => console.log(res))
+        .catch((err) => console.log(err))
 
         // Simulate user registration process
         console.log('User registered:', { email, password });
