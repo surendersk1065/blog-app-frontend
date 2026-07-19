@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import Navbar from './common/Navbar'
+import React from 'react'
 import BlogProfileImage from "../assets/Blog Website Design.webp"
 import CSS from "../assets/css-3.png"
 import HTML from "../assets/html.png"
@@ -13,7 +12,6 @@ import P3 from "../assets/p3.png"
 import BlogImage from "../assets/blogImage.png"
 import { useNavigate } from 'react-router-dom';
 import Footer from './common/Footer'
-import auth from '../config/firebase'
 
 function Home() {
     const navigate = useNavigate()
@@ -30,7 +28,7 @@ function Home() {
                     <button className='button-style mt-2'>Hire Me</button>
                 </div>
                 <div className='justify-center hidden sm:block'>
-                    <img src={BlogProfileImage} className='w-60 md:w-96 ' alt="Blog Profile Image" />
+                    <img src={BlogProfileImage} className='w-60 md:w-96 ' alt="Blog Profile" />
                     
 
                 </div>
@@ -39,12 +37,12 @@ function Home() {
 
 
             <div className='flex justify-evenly py-6'>
-                <img src={HTML} style={{ width: "50px" }} />
-                <img src={CSS} style={{ width: "50px" }} />
-                <img src={JS} style={{ width: "50px" }} />
-                <img src={REACTICON} style={{ width: "50px" }} />
-                <img src={DB} style={{ width: "50px" }} />
-                <img src={NODE} style={{ width: "50px" }} />
+                <img src={HTML} style={{ width: "50px" }} alt='blog1'/>
+                <img src={CSS} style={{ width: "50px" }} alt='blog2'/>
+                <img src={JS} style={{ width: "50px" }} alt='blog3'/>
+                <img src={REACTICON} style={{ width: "50px" }} alt='blog4'/>
+                <img src={DB} style={{ width: "50px" }} alt='blog5'/>
+                <img src={NODE} style={{ width: "50px" }} alt='blog6'/>
             </div>
 
             <div className='flex flex-col mt-10 items-center justify-around sm:flex-row'>
@@ -89,7 +87,7 @@ function Home() {
 
             <div className='flex items-center justify-center my-14'>
                 <div className='justify-center hidden sm:block'>
-                    <img src={BlogImage} className='w-60 md:w-96 ' alt="Blog Profile Image" />
+                    <img src={BlogImage} className='w-60 md:w-96 ' alt="Blog Profile" />
 
                 </div>
                 <div className="w-full sm:w-1/2 flex-col justify-center ml-6">
